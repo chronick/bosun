@@ -4,8 +4,8 @@
 
 **bosun** -- Agent entrypoint and lifecycle coordinator.
 
-Go 1.22+, minimal dependencies. Calls external tools (br, hoist, agent-mail)
-rather than embedding their logic.
+Go 1.25+, zero external dependencies (stdlib only). Calls external tools
+(br, hoist, agent-mail) rather than embedding their logic.
 
 ## Commands
 
@@ -17,20 +17,29 @@ go test ./...                # test all
 ## Layout
 
 ```
-main.go                      # cobra CLI entry point
+main.go                           # CLI entry point (dispatches to internal/cli)
 internal/
-  lifecycle/lifecycle.go     # main run loop
-  claim/claim.go             # beads task claiming
-  lease/lease.go             # agent-mail file lease client
-  heartbeat/heartbeat.go     # periodic heartbeat sender
+  cli/cli.go                     # Command dispatcher (stdlib only, no cobra)
+  cli/cli_test.go                # Dispatcher tests
+  config/config.go               # Environment variable loading
+  config/config_test.go          # Config tests
+  lifecycle/lifecycle.go         # Main run loop with signal handling
+  claim/claim.go                 # Beads task claiming and output parsing
+  claim/claim_test.go            # Claim parsing tests
+  complete/complete.go           # Post-task cleanup (close, PR, release)
+  register/register.go           # Agent-mail registration
+  lease/lease.go                 # Agent-mail file lease client
+  heartbeat/heartbeat.go         # Periodic heartbeat sender
+  toolexec/toolexec.go           # os/exec wrapper for external tools
 ```
 
 ## Key Design
 
+- Zero external dependencies: stdlib only (no cobra, no third-party packages)
 - Thin coordinator: sequences calls to br, hoist, agent-mail, $AGENT_COMMAND
 - Does NOT implement agent logic, task tracking, or messaging
 - Configuration via environment variables only
-- Graceful shutdown: SIGTERM → release leases → update task → exit
+- Graceful shutdown: SIGTERM -> release leases -> update task -> exit
 - Idempotent operations: safe to restart at any point in the lifecycle
 - Shell script spirit, Go binary for reliability
 
