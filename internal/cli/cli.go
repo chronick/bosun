@@ -3,6 +3,7 @@
 package cli
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"strings"
@@ -14,6 +15,7 @@ import (
 	"github.com/chronick/bosun/internal/lease"
 	"github.com/chronick/bosun/internal/lifecycle"
 	"github.com/chronick/bosun/internal/register"
+	"github.com/chronick/bosun/internal/serve"
 )
 
 // Command represents a subcommand with a name, description, and run function.
@@ -68,6 +70,12 @@ func Commands() []Command {
 			Desc:  "Close task, create PR, release lease",
 			Usage: "bosun complete <task-id> [--title <pr-title>]",
 			Run:   cmdComplete,
+		},
+		{
+			Name:  "serve",
+			Desc:  "Start HTTP server with lifecycle loop (containerized mode)",
+			Usage: "bosun serve",
+			Run:   cmdServe,
 		},
 	}
 }
@@ -131,6 +139,7 @@ func printUsage(version string) {
 	fmt.Fprintln(w, "  TASK_FILTER          Beads query filter (optional)")
 	fmt.Fprintln(w, "  HEARTBEAT_INTERVAL   Seconds between heartbeats (default: 30)")
 	fmt.Fprintln(w, "  IDLE_SLEEP           Seconds when no tasks available (default: 30)")
+	fmt.Fprintln(w, "  BOSUN_SERVE_ADDR     HTTP listen address for serve mode (default: :8080)")
 }
 
 // --- Command implementations ---
@@ -184,6 +193,17 @@ func cmdHeartbeat(cfg *config.Config, args []string) error {
 		return fmt.Errorf("AGENT_NAME is required")
 	}
 	return heartbeat.Send(cfg, "", "idle")
+}
+
+func cmdServe(cfg *config.Config, args []string) error {
+	if cfg.AgentName == "" {
+		return fmt.Errorf("AGENT_NAME is required")
+	}
+	if cfg.AgentCommand == "" {
+		return fmt.Errorf("AGENT_COMMAND is required")
+	}
+	srv := serve.New(cfg)
+	return srv.Run(context.Background())
 }
 
 func cmdComplete(cfg *config.Config, args []string) error {

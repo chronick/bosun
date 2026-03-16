@@ -18,6 +18,8 @@ type Config struct {
 
 	HeartbeatInterval time.Duration
 	IdleSleep         time.Duration
+
+	ServeAddr string // HTTP listen address for serve mode (default ":8080")
 }
 
 // Load reads configuration from environment variables with defaults.
@@ -30,7 +32,15 @@ func Load() *Config {
 		TaskFilter:        os.Getenv("TASK_FILTER"),
 		HeartbeatInterval: durationFromEnv("HEARTBEAT_INTERVAL", 30),
 		IdleSleep:         durationFromEnv("IDLE_SLEEP", 30),
+		ServeAddr:         envOrDefault("BOSUN_SERVE_ADDR", ":8080"),
 	}
+}
+
+func envOrDefault(key, def string) string {
+	if v := os.Getenv(key); v != "" {
+		return v
+	}
+	return def
 }
 
 // durationFromEnv reads an integer number of seconds from an env var,
