@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/chronick/bosun/internal/config"
+	"github.com/algonormative/bosun/internal/config"
 )
 
 func newTestServer() *Server {

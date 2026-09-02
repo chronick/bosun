@@ -15,8 +15,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/chronick/bosun/internal/config"
-	"github.com/chronick/bosun/internal/lifecycle"
+	"github.com/algonormative/bosun/internal/config"
+	"github.com/algonormative/bosun/internal/lifecycle"
 )
 
 // Status represents the current state of the bosun serve instance.

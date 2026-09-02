@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/chronick/bosun/internal/config"
-	"github.com/chronick/bosun/internal/lease"
-	"github.com/chronick/bosun/internal/toolexec"
+	"github.com/algonormative/bosun/internal/config"
+	"github.com/algonormative/bosun/internal/lease"
+	"github.com/algonormative/bosun/internal/toolexec"
 )
 
 // Complete performs all post-task cleanup for the given task ID.

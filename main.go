@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/chronick/bosun/internal/cli"
+	"github.com/algonormative/bosun/internal/cli"
 )
 
 // Version is set at build time via -ldflags.

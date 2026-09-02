@@ -8,7 +8,7 @@ Bosun runs inside each agent container, sequencing the boot-claim-work-report cy
 
 ```bash
 # Copy to container image, or:
-go install github.com/chronick/bosun@latest
+go install github.com/algonormative/bosun@latest
 ```
 
 ## Usage

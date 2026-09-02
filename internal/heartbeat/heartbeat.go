@@ -11,7 +11,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/chronick/bosun/internal/config"
+	"github.com/algonormative/bosun/internal/config"
 )
 
 var httpClient = &http.Client{

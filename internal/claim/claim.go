@@ -7,8 +7,8 @@ import (
 	"log"
 	"strings"
 
-	"github.com/chronick/bosun/internal/config"
-	"github.com/chronick/bosun/internal/toolexec"
+	"github.com/algonormative/bosun/internal/config"
+	"github.com/algonormative/bosun/internal/toolexec"
 )
 
 // Task represents a parsed beads task from `br ready` output.

@@ -14,13 +14,13 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/chronick/bosun/internal/claim"
-	"github.com/chronick/bosun/internal/complete"
-	"github.com/chronick/bosun/internal/config"
-	"github.com/chronick/bosun/internal/heartbeat"
-	"github.com/chronick/bosun/internal/lease"
-	"github.com/chronick/bosun/internal/register"
-	"github.com/chronick/bosun/internal/toolexec"
+	"github.com/algonormative/bosun/internal/claim"
+	"github.com/algonormative/bosun/internal/complete"
+	"github.com/algonormative/bosun/internal/config"
+	"github.com/algonormative/bosun/internal/heartbeat"
+	"github.com/algonormative/bosun/internal/lease"
+	"github.com/algonormative/bosun/internal/register"
+	"github.com/algonormative/bosun/internal/toolexec"
 )
 
 // state tracks the current lifecycle state for shutdown cleanup.

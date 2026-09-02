@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/chronick/bosun/internal/config"
+	"github.com/algonormative/bosun/internal/config"
 )
 
 func TestParseReadyOutput_Typical(t *testing.T) {
